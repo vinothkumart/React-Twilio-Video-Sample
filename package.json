@@ -100,7 +100,7 @@
       "pre-commit": "lint-staged"
     }
   },
-  "proxy": "http://localhost:3000/",
+  "proxy": "https://react-twilio-sample-server.herokuapp.com/",
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
