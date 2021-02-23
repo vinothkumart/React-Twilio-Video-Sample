@@ -12,7 +12,7 @@ export interface StateContextType {
   setError(error: TwilioError | null): void;
   getToken(name: string, room: string, passcode?: string): Promise<string>;
   user?: User | null | { displayName: undefined; photoURL: undefined; passcode?: string };
-  signIn?(passcode?: string): Promise<void>;
+  signIn?(userName?: string, passcode?: string): Promise<void>;
   signOut?(): Promise<void>;
   isAuthReady?: boolean;
   isFetching: boolean;
@@ -68,7 +68,9 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
         const endpoint = process.env.REACT_APP_TOKEN_ENDPOINT || '/token';
         const params = new window.URLSearchParams({ identity, roomName });
 
-        return fetch(`${endpoint}?${params}`, { headers }).then(res => res.text());
+        return fetch(`https://react-twilio-sample-server.herokuapp.com/${endpoint}?${params}`, { headers }).then(res =>
+          res.text()
+        );
       },
     };
   }

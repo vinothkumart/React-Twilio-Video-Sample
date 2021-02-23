@@ -76,7 +76,7 @@ export default function RoomNameScreen({ name, roomName, setName, setRoomName, h
               />
             </div>
           )}
-          <div className={classes.textFieldContainer}>
+          {/* <div className={classes.textFieldContainer}>
             <InputLabel shrink htmlFor="input-room-name">
               Room Name
             </InputLabel>
@@ -89,7 +89,7 @@ export default function RoomNameScreen({ name, roomName, setName, setRoomName, h
               value={roomName}
               onChange={handleRoomNameChange}
             />
-          </div>
+          </div> */}
         </div>
         <Grid container justify="flex-end">
           <Button

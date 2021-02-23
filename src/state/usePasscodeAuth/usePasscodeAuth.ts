@@ -8,8 +8,13 @@ export function getPasscode() {
   return passcode;
 }
 
+export function getUserName() {
+  const userName = window.sessionStorage.getItem('userName');
+  return userName;
+}
+
 export function fetchToken(name: string, room: string, passcode: string, create_room = true) {
-  return fetch(`/token`, {
+  return fetch(`https://react-twilio-sample-server.herokuapp.com/token`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -71,6 +76,7 @@ export default function usePasscodeAuth() {
 
   useEffect(() => {
     const passcode = getPasscode();
+    const userName = getUserName();
 
     if (passcode) {
       verifyPasscode(passcode)
@@ -85,13 +91,18 @@ export default function usePasscodeAuth() {
     } else {
       setIsAuthReady(true);
     }
+    if (userName) {
+      window.sessionStorage.setItem('userName', userName);
+    }
   }, [history]);
 
-  const signIn = useCallback((passcode: string) => {
+  const signIn = useCallback((userName: string, passcode: string) => {
+    console.log('userName', userName);
     return verifyPasscode(passcode).then(verification => {
       if (verification?.isValid) {
         setUser({ passcode } as any);
         window.sessionStorage.setItem('passcode', passcode);
+        window.sessionStorage.setItem('userName', userName);
       } else {
         throw new Error(getErrorMessage(verification?.error));
       }

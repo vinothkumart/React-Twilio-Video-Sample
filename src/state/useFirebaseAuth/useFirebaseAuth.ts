@@ -24,7 +24,9 @@ export default function useFirebaseAuth() {
       const endpoint = process.env.REACT_APP_TOKEN_ENDPOINT || '/token';
       const params = new window.URLSearchParams({ identity, roomName });
 
-      return fetch(`${endpoint}?${params}`, { headers }).then(res => res.text());
+      return fetch(`https://react-twilio-sample-server.herokuapp.com/${endpoint}?${params}`, { headers }).then(res =>
+        res.text()
+      );
     },
     [user]
   );

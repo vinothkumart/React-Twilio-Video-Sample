@@ -46,6 +46,20 @@ const useStyles = makeStyles((theme: Theme) => ({
   passcodeContainer: {
     minHeight: '120px',
   },
+  inputContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    margin: '1.5em 0 3.5em',
+    '& div:not(:last-child)': {
+      marginRight: '1em',
+    },
+    [theme.breakpoints.down('sm')]: {
+      margin: '1.5em 0 2em',
+    },
+  },
+  textFieldContainer: {
+    width: '100%',
+  },
   submitButton: {
     [theme.breakpoints.down('sm')]: {
       width: '100%',
@@ -59,14 +73,19 @@ export default function LoginPage() {
   const history = useHistory();
   const location = useLocation<{ from: Location }>();
   const [passcode, setPasscode] = useState('');
+  const [name, setName] = useState('');
   const [authError, setAuthError] = useState<Error | null>(null);
 
   const isAuthEnabled = Boolean(process.env.REACT_APP_SET_AUTH);
   console.log('isAuthEnabled', isAuthEnabled);
 
+  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+
   const login = () => {
     setAuthError(null);
-    signIn?.(passcode)
+    signIn?.(name, passcode)
       .then(() => {
         history.replace(location?.state?.from || { pathname: '/' });
       })
@@ -107,24 +126,41 @@ export default function LoginPage() {
           </Typography>
           <form onSubmit={handleSubmit}>
             <Grid container justify="space-between">
-              <div className={classes.passcodeContainer}>
-                <InputLabel shrink htmlFor="input-passcode">
-                  Passcode
-                </InputLabel>
-                <TextField
-                  id="input-passcode"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setPasscode(e.target.value)}
-                  type="password"
-                  variant="outlined"
-                  size="small"
-                />
-                <div>
-                  {authError && (
-                    <Typography variant="caption" className={classes.errorMessage}>
-                      <ErrorOutlineIcon />
-                      {authError.message}
-                    </Typography>
-                  )}
+              <div className={classes.inputContainer}>
+                <div className={classes.textFieldContainer}>
+                  <InputLabel shrink htmlFor="input-user-name">
+                    Your Name
+                  </InputLabel>
+                  <TextField
+                    id="input-user-name"
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    value={name}
+                    onChange={handleNameChange}
+                  />
+                </div>
+              </div>
+              <div className={classes.inputContainer}>
+                <div className={classes.textFieldContainer}>
+                  <InputLabel shrink htmlFor="input-passcode">
+                    Passcode
+                  </InputLabel>
+                  <TextField
+                    id="input-passcode"
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setPasscode(e.target.value)}
+                    type="password"
+                    variant="outlined"
+                    size="small"
+                  />
+                  <div>
+                    {authError && (
+                      <Typography variant="caption" className={classes.errorMessage}>
+                        <ErrorOutlineIcon />
+                        {authError.message}
+                      </Typography>
+                    )}
+                  </div>
                 </div>
               </div>
             </Grid>
