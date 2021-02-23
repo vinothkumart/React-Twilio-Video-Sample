@@ -95,11 +95,6 @@
       "last 1 safari version"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "proxy": "http://localhost:5000/",
   "jest": {
     "snapshotSerializers": [
