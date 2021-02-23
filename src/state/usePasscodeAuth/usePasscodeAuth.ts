@@ -14,7 +14,8 @@ export function getUserName() {
 }
 
 export function fetchToken(name: string, room: string, passcode: string, create_room = true) {
-  return fetch(`https://react-twilio-sample-server.herokuapp.com/token`, {
+  const endpoint = process.env.REACT_APP_TOKEN_ENDPOINT || '/token';
+  return fetch(`${endpoint}`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',

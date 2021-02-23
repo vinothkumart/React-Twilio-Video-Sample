@@ -68,9 +68,7 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
         const endpoint = process.env.REACT_APP_TOKEN_ENDPOINT || '/token';
         const params = new window.URLSearchParams({ identity, roomName });
 
-        return fetch(`https://react-twilio-sample-server.herokuapp.com/${endpoint}?${params}`, { headers }).then(res =>
-          res.text()
-        );
+        return fetch(`${endpoint}?${params}`, { headers }).then(res => res.text());
       },
     };
   }
