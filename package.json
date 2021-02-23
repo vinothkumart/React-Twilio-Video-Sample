@@ -64,12 +64,13 @@
   },
   "scripts": {
     "start": "concurrently npm:server npm:dev",
-    "dev": "react-scripts start",
+    "dev": "export PORT=3005  && react-scripts start",
     "build": "node ./scripts/build.js",
     "test": "jest",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx}",
     "server": "node server.js",
+    "debug":"export PORT=3005 && cross-env REACT_APP_SET_AUTH=passcode  && react-scripts --inspect-brk test --runInBand --no-cache",
     "test:ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run --browser chrome",
@@ -99,7 +100,7 @@
       "pre-commit": "lint-staged"
     }
   },
-  "proxy": "http://localhost:8081/",
+  "proxy": "http://localhost:3000/",
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"

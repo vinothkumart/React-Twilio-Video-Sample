@@ -78,10 +78,12 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
     return contextValue
       .getToken(name, room)
       .then(res => {
+        console.log(res);
         setIsFetching(false);
         return res;
       })
       .catch(err => {
+        console.log(err);
         setError(err);
         setIsFetching(false);
         return Promise.reject(err);
